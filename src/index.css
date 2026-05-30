@@ -1,0 +1,201 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  /* Premium Scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.4); }
+
+  /* Highly Transparent Glass Panels */
+  .glass-container {
+    background: rgba(10, 20, 15, 0.45);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  
+  .glass-card {
+    background: rgba(30, 45, 35, 0.45);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.2);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .glass-card:hover {
+    transform: translateY(-3px);
+    background: rgba(40, 55, 45, 0.55);
+    box-shadow: 0 12px 30px -5px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+  
+  /* URGENT CARD EXTREME HIGHLIGHT EFFECT */
+  .glass-urgent {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(30, 45, 35, 0.6));
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(239, 68, 68, 0.6);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .glass-urgent:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(40, 55, 45, 0.7));
+    border-color: rgba(239, 68, 68, 1);
+  }
+
+  /* Drag and Drop states */
+  .kanban-column {
+    transition: background-color 0.2s ease;
+    min-width: 320px;
+  }
+  .kanban-column.drag-over {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+  }
+  .dragging {
+    opacity: 0.5;
+    transform: scale(0.95);
+  }
+
+  /* Inputs */
+  .glass-input {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: white;
+  }
+  .glass-input:focus {
+    outline: none;
+    border-color: #FDE047;
+    background: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 0 2px rgba(253, 224, 71, 0.1);
+  }
+
+  /* Checkbox list */
+  .cl-checkbox {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 3px;
+    background: rgba(0,0,0,0.3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .cl-checkbox:checked {
+    background-color: #3B82F6;
+    border-color: #3B82F6;
+  }
+  .cl-checkbox:checked::after {
+    content: '';
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    margin-bottom: 2px;
+  }
+
+  /* View Toggles */
+  .view-toggle-active { background: rgba(255, 255, 255, 0.15); color: white; }
+  .view-toggle-inactive { color: #9CA3AF; }
+  .view-toggle-inactive:hover { color: white; }
+
+  /* Premium Markdown Document Styling */
+  .markdown-content {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #E5E7EB;
+  }
+  .markdown-content h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;
+    text-align: center;
+    background: linear-gradient(135deg, #3B82F6 0%, #D946EF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  }
+  .markdown-content h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #FDE047;
+    margin-top: 1.75rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.25rem;
+    letter-spacing: 0.02em;
+  }
+  .markdown-content h3 {
+    font-size: 0.95rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    color: #3B82F6;
+  }
+  .markdown-content p {
+    margin-bottom: 0.75rem;
+    color: #D1D5DB;
+  }
+  .markdown-content ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 1.25rem;
+  }
+  .markdown-content ul li {
+    position: relative;
+    padding-left: 1.25rem;
+    margin-bottom: 0.4rem;
+  }
+  .markdown-content ul li::before {
+    content: "•";
+    position: absolute;
+    left: 0.25rem;
+    color: #D946EF;
+    font-weight: bold;
+  }
+  .markdown-content ol {
+    list-style-type: decimal;
+    padding-left: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+  .markdown-content ol li {
+    margin-bottom: 0.4rem;
+    padding-left: 0.25rem;
+  }
+  .markdown-content li strong {
+    color: #FFFFFF;
+  }
+  .markdown-content strong {
+    color: #F3F4F6;
+    font-weight: 600;
+  }
+  .markdown-content blockquote {
+    border-left: 4px solid #D946EF;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.75rem 1rem;
+    margin: 1rem 0;
+    border-radius: 0 0.75rem 0.75rem 0;
+    font-style: italic;
+    color: #9CA3AF;
+  }
+}
+
+body {
+  background-image: url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=2574&auto=format&fit=crop'); 
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
