@@ -31,10 +31,28 @@ function TaskCard({ task, onClick, onDragStart }) {
     titleTextClass = 'line-through text-gray-400';
   } else if (task.urgent) {
     cardBaseClass = 'glass-urgent rounded-2xl p-4 cursor-grab active:cursor-grabbing border-l-[6px] border-l-accent-red animate-glow-pulse';
+  } else {
+    // Determine type class
+    if (task.taskType === 'Quay') cardBaseClass += ' card-type-quay';
+    else if (task.taskType === 'Dựng') cardBaseClass += ' card-type-dung';
+    else if (task.taskType === 'Livestream') cardBaseClass += ' card-type-livestream';
+    
+    // Determine if due today
+    if (task.dueDateTime) {
+      const d = new Date(task.dueDateTime);
+      const dStart = new Date(d).setHours(0,0,0,0);
+      const nowStart = new Date().setHours(0,0,0,0);
+      const diffDays = Math.ceil((dStart - nowStart) / (1000 * 60 * 60 * 24));
+      if (diffDays === 0) {
+        cardBaseClass += ' glass-today';
+      }
+    }
   }
 
-  if (!cardBaseClass.includes('glass-urgent')) {
+  if (!cardBaseClass.includes('glass-urgent') && !cardBaseClass.includes('glass-today')) {
     cardBaseClass += ' rounded-2xl p-4 cursor-grab active:cursor-grabbing hover:bg-white/5 transition-colors';
+  } else if (cardBaseClass.includes('glass-today')) {
+    cardBaseClass += ' rounded-2xl p-4 cursor-grab active:cursor-grabbing';
   }
 
   let subtaskCount = 0;

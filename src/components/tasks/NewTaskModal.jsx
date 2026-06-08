@@ -10,7 +10,8 @@ function NewTaskModal({ onClose }) {
     description: '',
     dueDateTime: newTaskInitialDate || '',
     order: '',
-    urgent: false
+    urgent: false,
+    taskType: ''
   });
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -38,13 +39,19 @@ function NewTaskModal({ onClose }) {
     e.preventDefault();
     if (!formData.title.trim()) return;
 
+    let finalTitle = formData.title;
+    if (formData.taskType && !finalTitle.startsWith(`${formData.taskType}: `)) {
+      finalTitle = `${formData.taskType}: ${finalTitle}`;
+    }
+
     const newTask = {
       id: 'task-' + Date.now(),
-      title: formData.title,
+      title: finalTitle,
       description: formData.description,
       dueDateTime: formData.dueDateTime,
       order: formData.order,
       urgent: formData.urgent,
+      taskType: formData.taskType,
       status: 'todo',
       dateCreated: new Date().toISOString(),
       subtasks: [],
@@ -221,6 +228,29 @@ Hãy trả về ĐÚNG VÀ CHỈ định dạng JSON (không markdown, không ch
               className="glass-input w-full px-4 py-3 rounded-xl text-sm" 
               placeholder="e.g. Edit final cut" 
             />
+          </div>
+
+          <div>
+            <label className="block text-[11px] font-bold text-gray-400 mb-1.5 ml-1 uppercase tracking-wider">Task Type</label>
+            <div className="flex flex-wrap gap-2">
+              {['', 'Quay', 'Dựng', 'Livestream'].map((type) => (
+                <button
+                  key={type}
+                  type="button"
+                  onClick={() => setFormData(prev => ({ ...prev, taskType: type }))}
+                  className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all border ${
+                    formData.taskType === type
+                      ? type === 'Quay' ? 'type-badge-quay' 
+                      : type === 'Dựng' ? 'type-badge-dung'
+                      : type === 'Livestream' ? 'type-badge-livestream'
+                      : 'bg-white/20 text-white border-white/40'
+                      : 'bg-black/30 text-gray-400 border-white/10 hover:border-white/20'
+                  }`}
+                >
+                  {type === '' ? 'None' : type}
+                </button>
+              ))}
+            </div>
           </div>
 
           <div>

@@ -49,12 +49,28 @@ function ListView({ tasks, onTaskClick }) {
 
           const isUrgentActive = t.urgent && t.status !== 'done';
           const isDone = t.status === 'done';
+          
+          let typeClass = '';
+          if (!isDone && t.taskType) {
+            if (t.taskType === 'Quay') typeClass = 'card-type-quay';
+            else if (t.taskType === 'Dựng') typeClass = 'card-type-dung';
+            else if (t.taskType === 'Livestream') typeClass = 'card-type-livestream';
+          }
+          
+          let todayClass = '';
+          if (!isDone && t.dueDateTime) {
+            const dStart = new Date(t.dueDateTime).setHours(0,0,0,0);
+            const nowStart = new Date().setHours(0,0,0,0);
+            if (Math.ceil((dStart - nowStart) / (1000 * 60 * 60 * 24)) === 0) {
+               todayClass = 'glass-today rounded-lg';
+            }
+          }
 
           return (
             <div 
               key={t.id}
               onClick={() => onTaskClick(t.id)}
-              className={`cursor-pointer grid grid-cols-[1fr_150px_120px_100px] gap-4 p-4 items-center border-b border-white/5 hover:bg-white/10 transition-colors group ${isDone ? 'opacity-50' : ''} ${isUrgentActive ? 'bg-accent-red/10 border-l-4 border-l-accent-red' : ''}`}
+              className={`cursor-pointer grid grid-cols-[1fr_150px_120px_100px] gap-4 p-4 items-center border-b border-white/5 hover:bg-white/10 transition-colors group ${isDone ? 'opacity-50' : ''} ${isUrgentActive ? 'bg-accent-red/10 border-l-4 border-l-accent-red rounded-lg' : ''} ${!isUrgentActive ? typeClass : ''} ${!isUrgentActive ? todayClass : ''}`}
             >
               <div className="flex items-center gap-3 truncate pr-4">
                 {isUrgentActive ? (

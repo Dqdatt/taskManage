@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { ChevronRight, Trash2, Calendar, Tag, Flame, AlignLeft, CheckSquare, Plus, Link as LinkIcon, X } from 'lucide-react';
 import { AppContext } from '../../context/AppContext';
+import MarkdownEditor from '../ui/MarkdownEditor';
 
 function TaskDrawer({ taskId, onClose }) {
   const { tasks, updateTask, deleteTask } = useContext(AppContext);
@@ -69,7 +70,11 @@ function TaskDrawer({ taskId, onClose }) {
   };
 
   const handleSave = () => {
-    updateTask(formData);
+    let finalTitle = formData.title;
+    if (formData.taskType && !finalTitle.startsWith(`${formData.taskType}: `)) {
+      finalTitle = `${formData.taskType}: ${finalTitle}`;
+    }
+    updateTask({ ...formData, title: finalTitle });
     handleClose();
   };
 
@@ -157,20 +162,40 @@ function TaskDrawer({ taskId, onClose }) {
                  <div className="w-11 h-6 bg-black/50 border border-white/20 rounded-full peer peer-checked:bg-accent-red transition-all shadow-inner"></div>
                  <div className="absolute left-1 top-1 bg-gray-300 w-4 h-4 rounded-full transition-all peer-checked:translate-x-5 peer-checked:bg-white shadow-sm"></div>
               </label>
+
+              <div className="text-gray-500 flex items-center gap-2 font-medium"><Tag className="w-4 h-4" /> Task Type</div>
+              <div className="flex flex-wrap gap-2">
+                {['', 'Quay', 'Dựng', 'Livestream'].map((type) => (
+                  <button
+                    key={type}
+                    type="button"
+                    onClick={() => setFormData(prev => ({ ...prev, taskType: type }))}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all border ${
+                      formData.taskType === type
+                        ? type === 'Quay' ? 'type-badge-quay' 
+                        : type === 'Dựng' ? 'type-badge-dung'
+                        : type === 'Livestream' ? 'type-badge-livestream'
+                        : 'bg-white/20 text-white border-white/40'
+                        : 'bg-black/30 text-gray-400 border-white/10 hover:border-white/20'
+                    }`}
+                  >
+                    {type === '' ? 'None' : type}
+                  </button>
+                ))}
+              </div>
            </div>
 
            <hr className="border-white/10" />
 
            <div>
               <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-2"><AlignLeft className="w-4 h-4" /> Description</h4>
-              <textarea 
+              <MarkdownEditor 
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
-                className="w-full bg-transparent text-[15px] text-gray-300 placeholder-gray-600 border-none outline-none resize-none leading-relaxed overflow-hidden" 
                 placeholder="Add some notes, context or requirements..." 
-                style={{ minHeight: '220px', height: 'auto' }}
-              ></textarea>
+                style={{ minHeight: '220px' }}
+              />
            </div>
 
            <div>

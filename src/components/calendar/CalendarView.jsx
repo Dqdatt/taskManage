@@ -88,7 +88,14 @@ function CalendarView() {
               let colClass = 'bg-gray-500/20 text-gray-300 border-gray-500/20';
               if (t.status === 'done') colClass = 'bg-accent-green/10 text-accent-green border-accent-green/20 line-through';
               else if (t.urgent) colClass = 'bg-accent-red/20 text-accent-red border-accent-red/50 shadow-[0_0_5px_rgba(239,68,68,0.5)]';
+              else if (t.taskType === 'Quay') colClass = 'bg-orange-500/20 text-orange-400 border-orange-500/40';
+              else if (t.taskType === 'Dựng') colClass = 'bg-blue-500/20 text-blue-400 border-blue-500/40';
+              else if (t.taskType === 'Livestream') colClass = 'bg-pink-500/20 text-pink-400 border-pink-500/40';
               else if (t.status === 'in-progress') colClass = 'bg-accent-blue/20 text-accent-blue border-accent-blue/20';
+              
+              if (isToday && t.status !== 'done' && !t.urgent) {
+                colClass += ' border-yellow-400 shadow-[0_0_8px_rgba(253,224,71,0.5)]';
+              }
               
               return (
                 <div 

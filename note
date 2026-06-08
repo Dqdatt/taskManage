@@ -1,0 +1,5 @@
+1. Khi tạo task hoặc sửa task, thì thêm giá trị là Task gồm: Quay hoặc Dựng hoặc Livestream, vì đây là đầu việc chính
+Nếu chọn task nào, thì khi bấm "Create Task" thì sẽ tự add thêm text ở đầu title task, và tự chia màu cho các task đó
+ví dụ: Tôi có một task tên là "video giới thiệu sản phẩm", thì khi chọn Task là "Quay", thì khi bấm "Create Task" sẽ tự động thêm text "Quay: " vào đầu title task, thành "Quay: video giới thiệu sản phẩm". Tương tự với các task khác như Dựng hoặc Livestream.
+2. Trong description của task thi thêm các tính năng hiển bị chỉ bằng icon như: tạo bảng, các bullet, nói chung sẽ giống như trình soạn thảo, nhưng tinh gọn tính năng hơn
+3. Hiện tại khi cố scroll thì background bị giật bị trắng, cố định luôn background khi scroll, không bị giật

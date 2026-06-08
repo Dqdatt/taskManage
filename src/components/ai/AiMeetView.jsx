@@ -1,6 +1,6 @@
 import React, { useContext, useState, useRef } from 'react';
 import { AppContext } from '../../context/AppContext';
-import { Sparkles, Settings, Plus, Clock, GitMerge, Mic, Cpu, Zap, Save, Edit2 } from 'lucide-react';
+import { Sparkles, Settings, Plus, Clock, GitMerge, Mic, Cpu, Zap, Save, Edit2, Trash2 } from 'lucide-react';
 import AiSettingsModal from './AiSettingsModal';
 import { marked } from 'marked';
 
@@ -308,6 +308,17 @@ ${combinedText}`;
     setAppState('upload');
   };
 
+  const deleteMeeting = (id) => {
+    if (window.confirm('Are you sure you want to delete this meeting?')) {
+      setMeetingHistory(meetingHistory.filter(m => m.id !== id));
+      setSelectedMeetingIds(prev => prev.filter(mId => mId !== id));
+      if (appState === 'result') {
+        setAppState('upload');
+        setCurrentSummary('');
+      }
+    }
+  };
+
   const renderHistory = () => {
     if (meetingHistory.length === 0) {
       return <div className="text-sm text-gray-500 italic text-center p-4">No saved meetings yet.</div>;
@@ -375,16 +386,30 @@ ${combinedText}`;
           </div>
           
           {editingMeetingId !== m.id && (
-            <button 
-              onClick={(e) => {
-                e.stopPropagation();
-                setEditingTitle(title);
-                setEditingMeetingId(m.id);
-              }}
-              className="absolute top-3 right-3 text-gray-500 hover:text-white opacity-0 group-hover:opacity-100 transition-opacity"
-            >
-              <Edit2 className="w-3.5 h-3.5" />
-            </button>
+            <div className="absolute top-3 right-3 flex items-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 rounded-lg backdrop-blur-sm border border-white/5 p-0.5">
+              <button 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setEditingTitle(title);
+                  setEditingMeetingId(m.id);
+                }}
+                className="text-gray-400 hover:text-white p-1.5 transition-colors"
+                title="Edit Title"
+              >
+                <Edit2 className="w-3 h-3" />
+              </button>
+              <div className="w-px h-3 bg-white/10 mx-0.5"></div>
+              <button 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  deleteMeeting(m.id);
+                }}
+                className="text-gray-400 hover:text-accent-red p-1.5 transition-colors"
+                title="Delete Meeting"
+              >
+                <Trash2 className="w-3 h-3" />
+              </button>
+            </div>
           )}
         </div>
       );
