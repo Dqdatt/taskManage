@@ -366,6 +366,16 @@ html, body {
   min-height: 100dvh;
 }
 
+/* Explicit Safe Area Classes to fix Tailwind arbitrary value parsing issues */
+.safe-pt { padding-top: env(safe-area-inset-top, 0px) !important; }
+.safe-pb { padding-bottom: env(safe-area-inset-bottom, 0px) !important; }
+.safe-min-h-top { min-height: calc(4rem + env(safe-area-inset-top, 0px)) !important; }
+.safe-h-bottom { height: calc(4rem + env(safe-area-inset-bottom, 0px)) !important; }
+
+@media (max-width: 639px) {
+  .safe-pb-app { padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px)) !important; }
+}
+
 /* PWA custom slide-up animation */
 .animate-slide-up {
   animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -379,33 +389,5 @@ html, body {
   to {
     transform: translateY(0) scale(1);
     opacity: 1;
-  }
-}
-
-/* Safe area height & padding helper utilities */
-.pb-safe {
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-
-.nav-topbar {
-  padding-top: env(safe-area-inset-top, 0px);
-  height: calc(4rem + env(safe-area-inset-top, 0px)); /* 4rem is 64px (h-16) */
-}
-
-.h-nav-bottom {
-  height: calc(4rem + env(safe-area-inset-bottom, 0px)); /* 4rem is 64px (h-16) */
-}
-
-.app-shell {
-  padding-bottom: calc(4rem + env(safe-area-inset-bottom, 0px));
-}
-
-@media (min-width: 640px) {
-  .nav-topbar {
-    padding-top: 0;
-    height: 5rem; /* 5rem is 80px (sm:h-20) */
-  }
-  .app-shell {
-    padding-bottom: 1rem; /* 1rem is 16px (sm:pb-4) */
   }
 }

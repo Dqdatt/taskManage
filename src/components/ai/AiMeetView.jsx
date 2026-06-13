@@ -433,13 +433,13 @@ ${combinedText}`;
       <main className="flex-1 overflow-y-auto lg:overflow-hidden p-4 sm:p-6 lg:p-8 flex flex-col lg:flex-row gap-6 lg:gap-8 relative">
         
         {/* MAIN AREA (Upload Top on Mobile, Right on Desktop) */}
-        <div className="flex-1 flex flex-col relative h-[450px] lg:h-full shrink-0 lg:shrink order-1 lg:order-2">
+        <div className="w-full lg:flex-1 flex flex-col relative lg:h-full shrink-0 lg:shrink order-1 lg:order-2">
           
           {/* STATE 1: UPLOAD */}
           {appState === 'upload' && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center transition-all bg-black/20 backdrop-blur-md rounded-3xl border border-white/5 animate-[fadeIn_0.3s_ease-out] z-10">
+            <div className="lg:absolute inset-0 flex flex-col items-center justify-center transition-all bg-black/20 backdrop-blur-md rounded-3xl border border-white/5 animate-[fadeIn_0.3s_ease-out] z-10 py-6 lg:py-0">
               <div 
-                className="relative glass-card w-full max-w-xl p-8 lg:p-12 h-full lg:h-auto rounded-[2rem] lg:rounded-[3rem] border-dashed border-[3px] border-white/20 hover:border-accent-purple/60 hover:bg-accent-purple/5 transition-all duration-300 flex flex-col items-center justify-center text-center group shadow-2xl"
+                className="relative glass-card w-full max-w-xl p-6 sm:p-8 lg:p-12 rounded-[2rem] lg:rounded-[3rem] border-dashed border-[3px] border-white/20 hover:border-accent-purple/60 hover:bg-accent-purple/5 transition-all duration-300 flex flex-col items-center justify-center text-center group shadow-2xl"
               >
                 <input 
                   type="file" 
@@ -448,22 +448,22 @@ ${combinedText}`;
                   onChange={processAudioFile} 
                   title="Click to upload audio"
                 />
-                <div className="w-16 h-16 lg:w-20 lg:h-20 rounded-full bg-accent-purple/20 flex items-center justify-center text-accent-purple mb-4 lg:mb-6 group-hover:scale-110 group-hover:bg-accent-purple group-hover:text-white transition-all shadow-[0_0_30px_rgba(217,70,239,0.3)]">
-                  <Mic className="w-6 h-6 lg:w-8 lg:h-8" />
+                <div className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full bg-accent-purple/20 flex items-center justify-center text-accent-purple mb-4 lg:mb-6 group-hover:scale-110 group-hover:bg-accent-purple group-hover:text-white transition-all shadow-[0_0_30px_rgba(217,70,239,0.3)]">
+                  <Mic className="w-6 h-6 sm:w-8 sm:h-8" />
                 </div>
-                <h3 className="text-xl lg:text-2xl font-bold text-white mb-2 lg:mb-3">Upload Meeting Audio</h3>
-                <p className="text-gray-400 max-w-sm mx-auto mb-4 lg:mb-6 text-[13px] lg:text-sm">
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-2 lg:mb-3">Upload Meeting Audio</h3>
+                <p className="text-gray-400 max-w-sm mx-auto mb-4 lg:mb-6 text-[12px] sm:text-[13px] lg:text-sm">
                   Drag and drop your audio file here or click to browse. Supported formats: mp3, m4a, wav. <br/>
                   <span className="text-[10px] lg:text-[11px] text-accent-blue mt-2 inline-block">(Max 25MB for Whisper / 20MB for Gemini. Nén về Mono 16-32kbps nếu họp dài)</span>
                 </p>
-                <div className="bg-white/10 px-6 py-2 rounded-full text-sm font-bold text-white group-hover:bg-white/20 transition-colors">Select Audio File</div>
+                <div className="bg-white/10 px-5 sm:px-6 py-2 rounded-full text-[13px] sm:text-sm font-bold text-white group-hover:bg-white/20 transition-colors">Select Audio File</div>
               </div>
             </div>
           )}
 
           {/* STATE 2: PROCESSING */}
           {appState === 'processing' && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-center transition-all bg-black/20 backdrop-blur-md rounded-3xl border border-white/5 z-20 animate-[fadeIn_0.3s_ease-out]">
+            <div className="lg:absolute inset-0 py-12 lg:py-0 flex flex-col items-center justify-center text-center transition-all bg-black/20 backdrop-blur-md rounded-3xl border border-white/5 z-20 animate-[fadeIn_0.3s_ease-out]">
               <div className="relative w-16 h-16 lg:w-20 lg:h-20 mb-6 lg:mb-8">
                 <div className="absolute inset-0 border-4 border-white/10 border-t-accent-purple rounded-full animate-spin"></div>
                 <div className="absolute inset-2 border-4 border-white/10 border-b-accent-blue rounded-full animate-[spin_1.5s_linear_infinite_reverse]"></div>
@@ -476,7 +476,7 @@ ${combinedText}`;
 
           {/* STATE 3: RESULTS */}
           {appState === 'result' && (
-            <div className="absolute inset-0 flex flex-col min-h-0 transition-all z-20 glass-card rounded-3xl p-4 md:p-6 border border-accent-purple/30 bg-gradient-to-br from-accent-purple/10 to-transparent shadow-[0_0_30px_rgba(217,70,239,0.1)] animate-[fadeIn_0.3s_ease-out]">
+            <div className="lg:absolute inset-0 flex flex-col min-h-[400px] lg:min-h-0 transition-all z-20 glass-card rounded-3xl p-4 md:p-6 border border-accent-purple/30 bg-gradient-to-br from-accent-purple/10 to-transparent shadow-[0_0_30px_rgba(217,70,239,0.1)] animate-[fadeIn_0.3s_ease-out]">
               <div className="flex items-center justify-between mb-3 border-b border-white/10 pb-3 shrink-0">
                 <h3 className="text-sm font-bold text-accent-purple uppercase tracking-wider flex items-center gap-2">
                   <Zap className="w-5 h-5" /> AI Summary

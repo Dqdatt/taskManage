@@ -19,9 +19,9 @@ function App() {
       <div id="bg-fixed" aria-hidden="true" />
 
       {/* App shell — use h-dvh for proper mobile viewport height */}
-      <div className="relative z-10 text-gray-100 font-sans h-dvh w-full flex flex-col overflow-hidden sm:p-4 md:p-6 app-shell">
+      <div className="relative z-10 text-gray-100 font-sans h-[100dvh] w-full flex flex-col overflow-hidden sm:p-4 md:p-6 sm:pb-4">
         {/* Main App Window */}
-        <div className="glass-container w-full h-full sm:rounded-[2rem] flex flex-col overflow-hidden shadow-2xl relative">
+        <div className="glass-container w-full h-full sm:rounded-[2rem] flex flex-col overflow-hidden shadow-2xl relative safe-pb-app">
           <Navbar />
           
           {activeTab === 'tasks' && <TasksView />}

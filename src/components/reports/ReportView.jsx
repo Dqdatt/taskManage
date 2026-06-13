@@ -225,19 +225,19 @@ function ReportView() {
       <div className="max-w-6xl mx-auto space-y-6">
         
         {/* Header Section */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 sm:mb-8">
           <div>
-            <h1 className="text-2xl font-bold text-white mb-1">Báo cáo tổng quan – {currentMonthYear}</h1>
-            <p className="text-sm text-gray-500">Dữ liệu cập nhật đến {currentDateStr}</p>
+            <h1 className="text-lg sm:text-2xl font-bold text-white mb-1 leading-tight tracking-tight">Báo cáo tổng quan – {currentMonthYear}</h1>
+            <p className="text-xs sm:text-sm text-gray-500">Dữ liệu cập nhật đến {currentDateStr}</p>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="flex items-center glass-card !rounded-full px-4 py-2">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex items-center glass-card !rounded-full px-2 sm:px-4 py-2">
               <button onClick={handlePrevMonth} className="p-1 hover:text-white text-gray-400 transition-colors"><ChevronLeft className="w-4 h-4" /></button>
-              <span className="mx-4 text-sm font-medium flex items-center gap-2"><LayoutGrid className="w-4 h-4"/> {currentMonthYear}</span>
+              <span className="mx-2 sm:mx-4 text-xs sm:text-sm font-medium flex items-center gap-1 sm:gap-2 whitespace-nowrap"><LayoutGrid className="w-3.5 h-3.5 sm:w-4 sm:h-4"/> {currentMonthYear}</span>
               <button onClick={handleNextMonth} className="p-1 hover:text-white text-gray-400 transition-colors"><ChevronRight className="w-4 h-4" /></button>
             </div>
-            <button className="flex items-center gap-2 glass-card !rounded-full hover:bg-white/10 transition-colors px-5 py-2 text-sm font-medium text-white">
-              <Download className="w-4 h-4" /> Download
+            <button className="flex items-center gap-1.5 sm:gap-2 glass-card !rounded-full hover:bg-white/10 transition-colors px-3 sm:px-5 py-2 text-xs sm:text-sm font-medium text-white whitespace-nowrap">
+              <Download className="w-4 h-4" /> <span className="hidden sm:inline">Download</span>
             </button>
           </div>
         </div>

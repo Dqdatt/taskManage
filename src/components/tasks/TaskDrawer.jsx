@@ -130,58 +130,66 @@ function TaskDrawer({ taskId, onClose }) {
              style={{ height: 'auto' }}
            ></textarea>
 
-           <div className="grid grid-cols-[140px_1fr] gap-y-3 gap-x-4 text-sm items-center">
-              <div className="text-gray-500 flex items-center gap-2 font-medium"><Calendar className="w-4 h-4" /> Due Date</div>
-              <input 
-                type="datetime-local" 
-                name="dueDateTime"
-                value={formData.dueDateTime}
-                onChange={handleChange}
-                className="bg-black/20 border border-white/10 rounded-md px-3 py-1.5 text-white outline-none focus:border-accent-yellow w-full max-w-[250px] [color-scheme:dark]" 
-              />
+           <div className="flex flex-col gap-4 text-sm">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-4">
+                <div className="text-gray-500 flex items-center gap-2 font-medium sm:w-[140px] shrink-0"><Calendar className="w-4 h-4" /> Due Date</div>
+                <input 
+                  type="datetime-local" 
+                  name="dueDateTime"
+                  value={formData.dueDateTime}
+                  onChange={handleChange}
+                  className="bg-black/20 border border-white/10 rounded-md px-3 py-1.5 text-white outline-none focus:border-accent-yellow w-full sm:max-w-[250px] [color-scheme:dark]" 
+                />
+              </div>
 
-              <div className="text-gray-500 flex items-center gap-2 font-medium"><Tag className="w-4 h-4" /> Source / Order</div>
-              <input 
-                type="text" 
-                name="order"
-                value={formData.order}
-                onChange={handleChange}
-                placeholder="e.g. GT, Social, Youtube..." 
-                className="bg-black/20 border border-white/10 rounded-md px-3 py-1.5 text-white outline-none focus:border-accent-yellow w-full max-w-[250px]" 
-              />
+              <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-4">
+                <div className="text-gray-500 flex items-center gap-2 font-medium sm:w-[140px] shrink-0"><Tag className="w-4 h-4" /> Source / Order</div>
+                <input 
+                  type="text" 
+                  name="order"
+                  value={formData.order}
+                  onChange={handleChange}
+                  placeholder="e.g. GT, Social, Youtube..." 
+                  className="bg-black/20 border border-white/10 rounded-md px-3 py-1.5 text-white outline-none focus:border-accent-yellow w-full sm:max-w-[250px]" 
+                />
+              </div>
 
-              <div className="text-gray-500 flex items-center gap-2 font-medium"><Flame className="w-4 h-4" /> Urgent</div>
-              <label className="relative inline-flex items-center cursor-pointer w-max">
-                 <input 
-                   type="checkbox" 
-                   name="urgent"
-                   checked={formData.urgent}
-                   onChange={handleChange}
-                   className="sr-only peer" 
-                 />
-                 <div className="w-11 h-6 bg-black/50 border border-white/20 rounded-full peer peer-checked:bg-accent-red transition-all shadow-inner"></div>
-                 <div className="absolute left-1 top-1 bg-gray-300 w-4 h-4 rounded-full transition-all peer-checked:translate-x-5 peer-checked:bg-white shadow-sm"></div>
-              </label>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-4">
+                <div className="text-gray-500 flex items-center gap-2 font-medium sm:w-[140px] shrink-0"><Flame className="w-4 h-4" /> Urgent</div>
+                <label className="relative inline-flex items-center cursor-pointer w-max">
+                   <input 
+                     type="checkbox" 
+                     name="urgent"
+                     checked={formData.urgent}
+                     onChange={handleChange}
+                     className="sr-only peer" 
+                   />
+                   <div className="w-11 h-6 bg-black/50 border border-white/20 rounded-full peer peer-checked:bg-accent-red transition-all shadow-inner"></div>
+                   <div className="absolute left-1 top-1 bg-gray-300 w-4 h-4 rounded-full transition-all peer-checked:translate-x-5 peer-checked:bg-white shadow-sm"></div>
+                </label>
+              </div>
 
-              <div className="text-gray-500 flex items-center gap-2 font-medium"><Tag className="w-4 h-4" /> Task Type</div>
-              <div className="flex flex-wrap gap-2">
-                {['', 'Quay', 'Dựng', 'Livestream'].map((type) => (
-                  <button
-                    key={type}
-                    type="button"
-                    onClick={() => setFormData(prev => ({ ...prev, taskType: type }))}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all border ${
-                      formData.taskType === type
-                        ? type === 'Quay' ? 'type-badge-quay' 
-                        : type === 'Dựng' ? 'type-badge-dung'
-                        : type === 'Livestream' ? 'type-badge-livestream'
-                        : 'bg-white/20 text-white border-white/40'
-                        : 'bg-black/30 text-gray-400 border-white/10 hover:border-white/20'
-                    }`}
-                  >
-                    {type === '' ? 'None' : type}
-                  </button>
-                ))}
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                <div className="text-gray-500 flex items-center gap-2 font-medium sm:w-[140px] shrink-0"><Tag className="w-4 h-4" /> Task Type</div>
+                <div className="flex flex-wrap gap-2">
+                  {['', 'Quay', 'Dựng', 'Livestream'].map((type) => (
+                    <button
+                      key={type}
+                      type="button"
+                      onClick={() => setFormData(prev => ({ ...prev, taskType: type }))}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all border ${
+                        formData.taskType === type
+                          ? type === 'Quay' ? 'type-badge-quay' 
+                          : type === 'Dựng' ? 'type-badge-dung'
+                          : type === 'Livestream' ? 'type-badge-livestream'
+                          : 'bg-white/20 text-white border-white/40'
+                          : 'bg-black/30 text-gray-400 border-white/10 hover:border-white/20'
+                      }`}
+                    >
+                      {type === '' ? 'None' : type}
+                    </button>
+                  ))}
+                </div>
               </div>
            </div>
 
