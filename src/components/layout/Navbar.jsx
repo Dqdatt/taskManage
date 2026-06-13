@@ -29,7 +29,7 @@ function Navbar() {
   return (
     <>
       {/* DESKTOP & MOBILE TOP HEADER */}
-      <nav className="h-16 sm:h-20 shrink-0 border-b border-white/10 flex items-center justify-between px-4 sm:px-8 bg-transparent z-20">
+      <nav className="nav-topbar shrink-0 border-b border-white/10 flex items-center justify-between px-4 sm:px-8 bg-transparent z-20">
         {/* Logo */}
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-accent-yellow flex items-center justify-center text-black shadow-lg shadow-yellow-500/20">
@@ -92,31 +92,31 @@ function Navbar() {
       </nav>
 
       {/* MOBILE BOTTOM NAVIGATION (Hidden on Desktop) */}
-      <nav className="sm:hidden fixed bottom-0 left-0 right-0 h-16 bg-black/60 backdrop-blur-xl border-t border-white/10 flex justify-around items-center z-50 pb-safe px-2">
+      <nav className="sm:hidden fixed bottom-0 left-0 right-0 h-nav-bottom bg-black/60 backdrop-blur-xl border-t border-white/10 flex justify-around items-start pt-1 z-50 px-2 pb-safe">
         <button 
           onClick={() => switchGlobalTab('tasks')}
-          className={`flex flex-col items-center justify-center w-16 h-full gap-1 transition-colors ${activeTab === 'tasks' ? 'text-accent-yellow' : 'text-gray-400'}`}
+          className={`flex flex-col items-center justify-center w-16 h-14 gap-1 transition-colors ${activeTab === 'tasks' ? 'text-accent-yellow' : 'text-gray-400'}`}
         >
           <LayoutGrid className="w-5 h-5" />
           <span className="text-[10px] font-medium">Tasks</span>
         </button>
         <button 
           onClick={() => switchGlobalTab('calendar')}
-          className={`flex flex-col items-center justify-center w-16 h-full gap-1 transition-colors ${activeTab === 'calendar' ? 'text-accent-yellow' : 'text-gray-400'}`}
+          className={`flex flex-col items-center justify-center w-16 h-14 gap-1 transition-colors ${activeTab === 'calendar' ? 'text-accent-yellow' : 'text-gray-400'}`}
         >
           <CalendarIcon className="w-5 h-5" />
           <span className="text-[10px] font-medium">Calendar</span>
         </button>
         <button 
           onClick={() => switchGlobalTab('ai')}
-          className={`flex flex-col items-center justify-center w-16 h-full gap-1 transition-colors ${activeTab === 'ai' ? 'text-accent-purple' : 'text-gray-400'}`}
+          className={`flex flex-col items-center justify-center w-16 h-14 gap-1 transition-colors ${activeTab === 'ai' ? 'text-accent-purple' : 'text-gray-400'}`}
         >
           <Sparkles className="w-5 h-5" />
           <span className="text-[10px] font-medium">AI Meet</span>
         </button>
         <button 
           onClick={() => switchGlobalTab('reports')}
-          className={`flex flex-col items-center justify-center w-16 h-full gap-1 transition-colors ${activeTab === 'reports' ? 'text-accent-blue' : 'text-gray-400'}`}
+          className={`flex flex-col items-center justify-center w-16 h-14 gap-1 transition-colors ${activeTab === 'reports' ? 'text-accent-blue' : 'text-gray-400'}`}
         >
           <Layers className="w-5 h-5" />
           <span className="text-[10px] font-medium">Reports</span>
