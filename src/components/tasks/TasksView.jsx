@@ -24,24 +24,40 @@ function TasksView() {
   const progressPercent = tasks.length === 0 ? 0 : Math.round((completedCount / tasks.length) * 100);
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden animate-[fadeIn_0.3s_ease-out]">
+    <div className="flex-1 flex flex-col overflow-hidden animate-[fadeIn_0.3s_ease-out] relative">
       {/* Header Actions */}
-      <header className="px-6 lg:px-8 py-2 shrink-0 border-b border-white/10 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-        <h1 className="text-xl font-bold text-white tracking-tight">Tasks</h1>
+      <header className="px-4 sm:px-6 lg:px-8 py-3 shrink-0 border-b border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex items-center justify-between">
+          <h1 className="text-xl font-bold text-white tracking-tight">Tasks</h1>
+          <div className="flex md:hidden bg-black/40 rounded-full p-1 border border-white/10 backdrop-blur-md">
+            <button 
+              onClick={() => switchTaskView('kanban')} 
+              className={`px-3 py-1.5 rounded-full text-sm font-medium flex items-center justify-center transition-all ${currentTaskView === 'kanban' ? 'view-toggle-active' : 'view-toggle-inactive'}`}
+            >
+              <Kanban className="w-4 h-4" />
+            </button>
+            <button 
+              onClick={() => switchTaskView('list')} 
+              className={`px-3 py-1.5 rounded-full text-sm font-medium flex items-center justify-center transition-all ${currentTaskView === 'list' ? 'view-toggle-active' : 'view-toggle-inactive'}`}
+            >
+              <List className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
         
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="relative group">
+        <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+          <div className="relative group flex-1 md:flex-none">
             <Search className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-accent-yellow transition-colors" />
             <input 
               type="text" 
               placeholder="Search tasks..." 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="glass-input pl-10 pr-4 py-2.5 rounded-full text-sm w-48 focus:w-64 transition-all" 
+              className="glass-input pl-10 pr-4 py-2.5 rounded-full text-sm w-full md:w-48 md:focus:w-64 transition-all" 
             />
           </div>
           
-          <div className="flex bg-black/40 rounded-full p-1 border border-white/10 backdrop-blur-md ml-auto lg:ml-2">
+          <div className="hidden md:flex bg-black/40 rounded-full p-1 border border-white/10 backdrop-blur-md ml-auto lg:ml-2">
             <button 
               onClick={() => switchTaskView('kanban')} 
               className={`px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 transition-all ${currentTaskView === 'kanban' ? 'view-toggle-active' : 'view-toggle-inactive'}`}
@@ -58,7 +74,7 @@ function TasksView() {
 
           <button 
             onClick={() => openNewTaskModal()} 
-            className="bg-accent-yellow hover:bg-yellow-400 text-black px-5 py-2.5 rounded-full text-sm font-bold flex items-center gap-2 shadow-lg shadow-yellow-500/20 transition-all hover:scale-105 active:scale-95"
+            className="hidden md:flex bg-accent-yellow hover:bg-yellow-400 text-black px-5 py-2.5 rounded-full text-sm font-bold items-center gap-2 shadow-lg shadow-yellow-500/20 transition-all hover:scale-105 active:scale-95"
           >
             <Plus className="w-4 h-4" /> New task
           </button>
@@ -67,8 +83,8 @@ function TasksView() {
 
       <main className="flex-1 overflow-hidden relative">
         {/* KANBAN VIEW */}
-        <div className={`absolute inset-0 flex h-full px-8 pb-8 pt-2 transition-opacity duration-300 gap-8 ${currentTaskView === 'kanban' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-          <div className="flex-1 overflow-x-auto overflow-y-hidden">
+        <div className={`absolute inset-0 flex h-full px-4 sm:px-8 pb-8 pt-2 transition-opacity duration-300 gap-8 ${currentTaskView === 'kanban' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+          <div className="flex-1 overflow-x-auto overflow-y-hidden snap-x snap-mandatory">
             <KanbanBoard tasks={filteredTasks} onTaskClick={setSelectedTaskId} />
           </div>
 
@@ -105,10 +121,18 @@ function TasksView() {
         </div>
 
         {/* LIST VIEW */}
-        <div className={`absolute inset-0 overflow-y-auto px-8 pb-8 pt-2 transition-opacity duration-300 ${currentTaskView === 'list' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <div className={`absolute inset-0 overflow-y-auto px-4 sm:px-8 pb-8 pt-2 transition-opacity duration-300 ${currentTaskView === 'list' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
           <ListView tasks={filteredTasks} onTaskClick={setSelectedTaskId} />
         </div>
       </main>
+
+      {/* MOBILE FLOATING ACTION BUTTON */}
+      <button 
+        onClick={() => openNewTaskModal()}
+        className="md:hidden fixed bottom-20 right-4 bg-accent-yellow text-black w-14 h-14 rounded-full flex items-center justify-center shadow-[0_4px_20px_rgba(234,179,8,0.4)] z-40 active:scale-90 transition-transform"
+      >
+        <Plus className="w-6 h-6" />
+      </button>
     </div>
   );
 }

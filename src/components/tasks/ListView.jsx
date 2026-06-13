@@ -25,13 +25,14 @@ function ListView({ tasks, onTaskClick }) {
   }
 
   return (
-    <div className="glass-card rounded-2xl p-2 w-full">
-      <div className="grid grid-cols-[1fr_150px_120px_100px] gap-4 p-4 border-b border-white/10 text-[11px] font-bold text-gray-400 uppercase tracking-wider">
-        <div>Task Name</div>
-        <div>Status</div>
-        <div>Due Date</div>
-        <div className="text-right">Actions</div>
-      </div>
+    <div className="glass-card rounded-2xl w-full overflow-x-auto">
+      <div className="min-w-[600px] p-2">
+        <div className="grid grid-cols-[1fr_150px_120px_100px] gap-4 p-4 border-b border-white/10 text-[11px] font-bold text-gray-400 uppercase tracking-wider">
+          <div>Task Name</div>
+          <div>Status</div>
+          <div>Due Date</div>
+          <div className="text-right">Actions</div>
+        </div>
       
       <div className="flex flex-col">
         {sortedTasks.map(t => {
@@ -102,6 +103,7 @@ function ListView({ tasks, onTaskClick }) {
             </div>
           );
         })}
+      </div>
       </div>
     </div>
   );

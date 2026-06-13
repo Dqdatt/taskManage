@@ -430,13 +430,79 @@ ${combinedText}`;
         </button>
       </header>
 
-      <main className="flex-1 overflow-hidden p-8 flex gap-8 relative">
+      <main className="flex-1 overflow-y-auto lg:overflow-hidden p-4 sm:p-6 lg:p-8 flex flex-col lg:flex-row gap-6 lg:gap-8 relative">
         
-        {/* HISTORY SIDEBAR */}
-        <aside className="w-[300px] shrink-0 flex flex-col h-full gap-4">
+        {/* MAIN AREA (Upload Top on Mobile, Right on Desktop) */}
+        <div className="flex-1 flex flex-col relative h-[450px] lg:h-full shrink-0 lg:shrink order-1 lg:order-2">
+          
+          {/* STATE 1: UPLOAD */}
+          {appState === 'upload' && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center transition-all bg-black/20 backdrop-blur-md rounded-3xl border border-white/5 animate-[fadeIn_0.3s_ease-out] z-10">
+              <div 
+                className="relative glass-card w-full max-w-xl p-8 lg:p-12 h-full lg:h-auto rounded-[2rem] lg:rounded-[3rem] border-dashed border-[3px] border-white/20 hover:border-accent-purple/60 hover:bg-accent-purple/5 transition-all duration-300 flex flex-col items-center justify-center text-center group shadow-2xl"
+              >
+                <input 
+                  type="file" 
+                  accept="audio/*" 
+                  className="absolute inset-0 opacity-0 cursor-pointer z-10" 
+                  onChange={processAudioFile} 
+                  title="Click to upload audio"
+                />
+                <div className="w-16 h-16 lg:w-20 lg:h-20 rounded-full bg-accent-purple/20 flex items-center justify-center text-accent-purple mb-4 lg:mb-6 group-hover:scale-110 group-hover:bg-accent-purple group-hover:text-white transition-all shadow-[0_0_30px_rgba(217,70,239,0.3)]">
+                  <Mic className="w-6 h-6 lg:w-8 lg:h-8" />
+                </div>
+                <h3 className="text-xl lg:text-2xl font-bold text-white mb-2 lg:mb-3">Upload Meeting Audio</h3>
+                <p className="text-gray-400 max-w-sm mx-auto mb-4 lg:mb-6 text-[13px] lg:text-sm">
+                  Drag and drop your audio file here or click to browse. Supported formats: mp3, m4a, wav. <br/>
+                  <span className="text-[10px] lg:text-[11px] text-accent-blue mt-2 inline-block">(Max 25MB for Whisper / 20MB for Gemini. Nén về Mono 16-32kbps nếu họp dài)</span>
+                </p>
+                <div className="bg-white/10 px-6 py-2 rounded-full text-sm font-bold text-white group-hover:bg-white/20 transition-colors">Select Audio File</div>
+              </div>
+            </div>
+          )}
+
+          {/* STATE 2: PROCESSING */}
+          {appState === 'processing' && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center transition-all bg-black/20 backdrop-blur-md rounded-3xl border border-white/5 z-20 animate-[fadeIn_0.3s_ease-out]">
+              <div className="relative w-16 h-16 lg:w-20 lg:h-20 mb-6 lg:mb-8">
+                <div className="absolute inset-0 border-4 border-white/10 border-t-accent-purple rounded-full animate-spin"></div>
+                <div className="absolute inset-2 border-4 border-white/10 border-b-accent-blue rounded-full animate-[spin_1.5s_linear_infinite_reverse]"></div>
+                <Cpu className="w-5 h-5 lg:w-6 lg:h-6 text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+              </div>
+              <h3 className="text-lg lg:text-xl font-bold text-white mb-2">Processing AI...</h3>
+              <p className="text-xs lg:text-sm text-gray-400 max-w-xs lg:max-w-sm">This may take a minute depending on the data size. AI is thinking.</p>
+            </div>
+          )}
+
+          {/* STATE 3: RESULTS */}
+          {appState === 'result' && (
+            <div className="absolute inset-0 flex flex-col min-h-0 transition-all z-20 glass-card rounded-3xl p-4 md:p-6 border border-accent-purple/30 bg-gradient-to-br from-accent-purple/10 to-transparent shadow-[0_0_30px_rgba(217,70,239,0.1)] animate-[fadeIn_0.3s_ease-out]">
+              <div className="flex items-center justify-between mb-3 border-b border-white/10 pb-3 shrink-0">
+                <h3 className="text-sm font-bold text-accent-purple uppercase tracking-wider flex items-center gap-2">
+                  <Zap className="w-5 h-5" /> AI Summary
+                </h3>
+                <button 
+                  onClick={saveCurrentMeetingSummary} 
+                  className="bg-accent-purple hover:bg-purple-500 text-white px-4 py-2 lg:px-5 lg:py-2.5 rounded-full text-xs lg:text-sm font-bold transition-colors flex items-center gap-2 shadow-lg shadow-purple-500/30"
+                >
+                  <Save className="w-4 h-4" /> Save
+                </button>
+              </div>
+              <div className="flex-1 min-h-0 overflow-y-auto pr-4">
+                <div 
+                  className="text-sm lg:text-[15px] text-white leading-relaxed markdown-content"
+                  dangerouslySetInnerHTML={{ __html: marked.parse(currentSummary || '') }}
+                />
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* HISTORY SIDEBAR (Moved to bottom on Mobile, Left on Desktop) */}
+        <aside className="w-full lg:w-[300px] shrink-0 flex flex-col h-[400px] lg:h-full gap-4 order-2 lg:order-1">
           <button 
             onClick={startNewMeeting} 
-            className="glass-input w-full py-3 rounded-2xl text-sm font-bold hover:bg-white/10 transition-colors flex items-center justify-center gap-2 text-white border border-white/10 shadow-lg group"
+            className="glass-input w-full py-3 rounded-2xl text-sm font-bold hover:bg-white/10 transition-colors flex items-center justify-center gap-2 text-white border border-white/10 shadow-lg group shrink-0"
           >
             <Plus className="w-4 h-4 group-hover:rotate-90 transition-transform" /> New Meeting
           </button>
@@ -459,72 +525,6 @@ ${combinedText}`;
             )}
           </div>
         </aside>
-
-        {/* MAIN AREA */}
-        <div className="flex-1 flex flex-col relative h-full">
-          
-          {/* STATE 1: UPLOAD */}
-          {appState === 'upload' && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center transition-all bg-black/20 backdrop-blur-md rounded-3xl border border-white/5 animate-[fadeIn_0.3s_ease-out]">
-              <div 
-                className="relative glass-card w-full max-w-xl p-12 rounded-[3rem] border-dashed border-[3px] border-white/20 hover:border-accent-purple/60 hover:bg-accent-purple/5 transition-all duration-300 flex flex-col items-center justify-center text-center group shadow-2xl"
-              >
-                <input 
-                  type="file" 
-                  accept="audio/*" 
-                  className="absolute inset-0 opacity-0 cursor-pointer z-10" 
-                  onChange={processAudioFile} 
-                  title="Click to upload audio"
-                />
-                <div className="w-20 h-20 rounded-full bg-accent-purple/20 flex items-center justify-center text-accent-purple mb-6 group-hover:scale-110 group-hover:bg-accent-purple group-hover:text-white transition-all shadow-[0_0_30px_rgba(217,70,239,0.3)]">
-                  <Mic className="w-8 h-8" />
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-3">Upload Meeting Audio</h3>
-                <p className="text-gray-400 max-w-sm mx-auto mb-6 text-sm">
-                  Drag and drop your audio file here or click to browse. Supported formats: mp3, m4a, wav. <br/>
-                  <span className="text-[11px] text-accent-blue mt-2 inline-block">(Max 25MB for Whisper / 20MB for Gemini. Nén về Mono 16-32kbps nếu họp dài)</span>
-                </p>
-                <div className="bg-white/10 px-6 py-2 rounded-full text-sm font-bold text-white group-hover:bg-white/20 transition-colors">Select Audio File</div>
-              </div>
-            </div>
-          )}
-
-          {/* STATE 2: PROCESSING */}
-          {appState === 'processing' && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-center transition-all bg-black/20 backdrop-blur-md rounded-3xl border border-white/5 z-10 animate-[fadeIn_0.3s_ease-out]">
-              <div className="relative w-20 h-20 mb-8">
-                <div className="absolute inset-0 border-4 border-white/10 border-t-accent-purple rounded-full animate-spin"></div>
-                <div className="absolute inset-2 border-4 border-white/10 border-b-accent-blue rounded-full animate-[spin_1.5s_linear_infinite_reverse]"></div>
-                <Cpu className="w-6 h-6 text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">Processing AI...</h3>
-              <p className="text-sm text-gray-400 max-w-sm">This may take a minute depending on the data size. AI is thinking.</p>
-            </div>
-          )}
-
-          {/* STATE 3: RESULTS */}
-          {appState === 'result' && (
-            <div className="absolute inset-0 flex flex-col min-h-0 transition-all z-20 glass-card rounded-3xl p-4 md:p-6 border border-accent-purple/30 bg-gradient-to-br from-accent-purple/10 to-transparent shadow-[0_0_30px_rgba(217,70,239,0.1)] animate-[fadeIn_0.3s_ease-out]">
-              <div className="flex items-center justify-between mb-3 border-b border-white/10 pb-3 shrink-0">
-                <h3 className="text-sm font-bold text-accent-purple uppercase tracking-wider flex items-center gap-2">
-                  <Zap className="w-5 h-5" /> AI Summary
-                </h3>
-                <button 
-                  onClick={saveCurrentMeetingSummary} 
-                  className="bg-accent-purple hover:bg-purple-500 text-white px-5 py-2.5 rounded-full text-sm font-bold transition-colors flex items-center gap-2 shadow-lg shadow-purple-500/30"
-                >
-                  <Save className="w-4 h-4" /> Save
-                </button>
-              </div>
-              <div className="flex-1 min-h-0 overflow-y-auto pr-4">
-                <div 
-                  className="text-[15px] text-white leading-relaxed markdown-content"
-                  dangerouslySetInnerHTML={{ __html: marked.parse(currentSummary || '') }}
-                />
-              </div>
-            </div>
-          )}
-        </div>
       </main>
 
       {/* Settings Modal */}

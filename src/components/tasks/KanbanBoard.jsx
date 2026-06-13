@@ -66,7 +66,7 @@ function KanbanBoard({ tasks, onTaskClick }) {
         return (
           <div 
             key={col.id}
-            className={`flex-1 flex flex-col h-full kanban-column min-w-[320px] transition-all duration-200 ${isDragOver ? 'bg-white/5 rounded-[1.5rem]' : ''}`}
+            className={`flex-1 flex flex-col h-full kanban-column min-w-[320px] snap-center shrink-0 transition-all duration-200 ${isDragOver ? 'bg-white/5 rounded-[1.5rem]' : ''}`}
             onDragOver={(e) => handleDragOver(e, col.id)}
             onDragLeave={(e) => handleDragLeave(e, col.id)}
             onDrop={(e) => handleDrop(e, col.id)}
