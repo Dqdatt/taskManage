@@ -14,21 +14,23 @@ function MobileBottomNav() {
 
   return (
     <nav className="mobile-bottom-nav" aria-label="Primary mobile navigation">
-      {items.map(({ id, label, icon: Icon }) => {
-        const active = activeTab === id;
-        return (
-          <button
-            key={id}
-            type="button"
-            onClick={() => switchGlobalTab(id)}
-            className={`mobile-nav-item ${active ? 'mobile-nav-item-active' : ''}`}
-            aria-current={active ? 'page' : undefined}
-          >
-            <Icon className="w-5 h-5" />
-            <span>{label}</span>
-          </button>
-        );
-      })}
+      <div className="mobile-bottom-nav-inner">
+        {items.map(({ id, label, icon: Icon }) => {
+          const active = activeTab === id;
+          return (
+            <button
+              key={id}
+              type="button"
+              onClick={() => switchGlobalTab(id)}
+              className={`mobile-nav-item ${active ? 'mobile-nav-item-active' : ''}`}
+              aria-current={active ? 'page' : undefined}
+            >
+              <Icon className="w-5 h-5" />
+              <span>{label}</span>
+            </button>
+          );
+        })}
+      </div>
     </nav>
   );
 }
