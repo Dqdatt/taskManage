@@ -5,6 +5,16 @@ import { formatTaskTime, statusMeta, toDateKey } from './mobileUtils';
 
 const weekDays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
+const getCalendarTaskTone = (task) => {
+  if (task.status === 'done') return 'mobile-cal-task-done';
+  if (task.urgent) return 'mobile-cal-task-urgent';
+  if (task.taskType === 'Quay') return 'mobile-cal-task-shoot';
+  if (task.taskType === 'Dựng') return 'mobile-cal-task-edit';
+  if (task.taskType === 'Livestream') return 'mobile-cal-task-live';
+  if (task.status === 'in-progress') return 'mobile-cal-task-doing';
+  return 'mobile-cal-task-default';
+};
+
 function buildMonthCells(year, month) {
   const firstDay = new Date(year, month, 1);
   const lastDay = new Date(year, month + 1, 0);
@@ -84,7 +94,7 @@ function MobileCalendarPage() {
 
         <div className="mt-1 grid grid-cols-7 gap-1">
           {cells.map((date, index) => {
-            if (!date) return <div key={`blank-${index}`} className="aspect-square" />;
+            if (!date) return <div key={`blank-${index}`} className="mobile-calendar-day mobile-calendar-day-empty" />;
             const key = toDateKey(date);
             const dayTasks = tasksByDate[key] || [];
             const selected = key === selectedKey;
@@ -97,12 +107,15 @@ function MobileCalendarPage() {
                 onClick={() => setSelectedKey(key)}
                 className={`mobile-calendar-day ${selected ? 'mobile-calendar-day-selected' : ''} ${isToday ? 'mobile-calendar-day-today' : ''}`}
               >
-                <span>{date.getDate()}</span>
+                <span className="mobile-calendar-date-number">{date.getDate()}</span>
                 {dayTasks.length > 0 && (
-                  <div className="mt-1 flex justify-center gap-0.5">
+                  <div className="mobile-calendar-task-stack">
                     {dayTasks.slice(0, 3).map((task) => (
-                      <i key={task.id} className={`h-1.5 w-1.5 rounded-full ${task.urgent ? 'bg-red-300' : task.status === 'done' ? 'bg-emerald-300' : 'bg-yellow-200'}`} />
+                      <span key={task.id} className={`mobile-calendar-task-pill ${getCalendarTaskTone(task)}`}>
+                        {task.title}
+                      </span>
                     ))}
+                    {dayTasks.length > 3 && <span className="mobile-calendar-more">+{dayTasks.length - 3}</span>}
                   </div>
                 )}
               </button>

@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Calendar, CheckSquare, Flag, Link as LinkIcon, Plus, Save, Tag, Trash2, X } from 'lucide-react';
+import { Calendar, Check, CheckSquare, ChevronDown, Flag, Link as LinkIcon, Plus, Save, Tag, Trash2, X } from 'lucide-react';
 import { AppContext } from '../../context/AppContext';
 import MarkdownEditor from '../ui/MarkdownEditor';
 import { statusMeta } from './mobileUtils';
@@ -9,6 +9,7 @@ function MobileTaskSheet({ taskId, onClose }) {
   const [isClosing, setIsClosing] = useState(false);
   const task = tasks.find((item) => item.id === taskId);
   const [formData, setFormData] = useState(() => task ? { ...task, subtasks: task.subtasks || [], links: task.links || [] } : null);
+  const [openMenu, setOpenMenu] = useState(null);
 
   if (!formData) return null;
 
@@ -47,12 +48,61 @@ function MobileTaskSheet({ taskId, onClose }) {
   };
 
   const meta = statusMeta[formData.status] || statusMeta.todo;
+  const statusOptions = Object.entries(statusMeta).map(([value, item]) => ({ value, label: item.label }));
+  const typeOptions = [
+    { value: '', label: 'None' },
+    { value: 'Quay', label: 'Quay' },
+    { value: 'Dựng', label: 'Dựng' },
+    { value: 'Livestream', label: 'Livestream' },
+  ];
+
+  const compactDropdown = ({ id, label, value, options, onSelect }) => {
+    const selected = options.find((option) => option.value === value) || options[0];
+    const open = openMenu === id;
+
+    return (
+      <div className={`mobile-compact-select ${open ? 'mobile-compact-select-open' : ''}`}>
+        <button
+          type="button"
+          className="mobile-select-control"
+          onClick={() => setOpenMenu(open ? null : id)}
+          aria-expanded={open}
+        >
+          <span>{label}</span>
+          <strong>{selected.label}</strong>
+          <ChevronDown className="w-4 h-4" />
+        </button>
+
+        {open && (
+          <div className="mobile-select-menu">
+            {options.map((option) => {
+              const active = option.value === value;
+              return (
+                <button
+                  key={option.value || 'none'}
+                  type="button"
+                  className={`mobile-select-option ${active ? 'mobile-select-option-active' : ''}`}
+                  onClick={() => {
+                    onSelect(option.value);
+                    setOpenMenu(null);
+                  }}
+                >
+                  <span>{option.label}</span>
+                  {active && <Check className="w-4 h-4" />}
+                </button>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className={`mobile-sheet-backdrop ${isClosing ? 'opacity-0' : 'opacity-100'}`} onClick={closeSheet}>
       <section className={`mobile-task-sheet ${isClosing ? 'translate-y-full' : 'translate-y-0'}`} onClick={(event) => event.stopPropagation()}>
         <div className="mobile-sheet-handle" />
-        <div className="flex items-center justify-between gap-3 px-5 pb-4">
+        <div className="mobile-sheet-topbar">
           <span className={`mobile-pill ${meta.tone}`}>{meta.label}</span>
           <div className="flex items-center gap-2">
             <button type="button" onClick={removeTask} className="mobile-icon-button text-red-200" aria-label="Delete task">
@@ -65,70 +115,57 @@ function MobileTaskSheet({ taskId, onClose }) {
         </div>
 
         <div className="mobile-sheet-scroll">
-          <textarea
+          <input
+            type="text"
             name="title"
             value={formData.title}
             onChange={handleChange}
-            rows="2"
-            className="w-full resize-none bg-transparent text-2xl font-black leading-tight text-white outline-none placeholder:text-white/25"
+            className="mobile-sheet-title"
             placeholder="Untitled task"
           />
 
-          <div className="mt-5 grid gap-3">
-            <label className="mobile-field">
-              <span><Calendar className="w-4 h-4" /> Due date</span>
-              <input type="datetime-local" name="dueDateTime" value={formData.dueDateTime || ''} onChange={handleChange} />
-            </label>
-            <label className="mobile-field">
-              <span><Tag className="w-4 h-4" /> Source / order</span>
-              <input type="text" name="order" value={formData.order || ''} onChange={handleChange} placeholder="GT, Social..." />
-            </label>
-            <label className="mobile-field">
-              <span><Flag className="w-4 h-4" /> Urgent</span>
-              <input type="checkbox" name="urgent" checked={!!formData.urgent} onChange={handleChange} className="mobile-checkbox" />
-            </label>
-          </div>
-
-          <div className="mt-5">
-            <p className="mb-2 text-[11px] font-black uppercase tracking-[0.16em] text-white/40">Status</p>
-            <div className="grid grid-cols-3 gap-2">
-              {Object.entries(statusMeta).map(([status, item]) => (
-                <button
-                  key={status}
-                  type="button"
-                  onClick={() => setFormData((prev) => ({ ...prev, status }))}
-                  className={`mobile-segment ${formData.status === status ? 'mobile-segment-active' : ''}`}
-                >
-                  {item.shortLabel}
-                </button>
-              ))}
+          <section className="mobile-task-properties">
+            <div className="mobile-sheet-meta-grid">
+              <label className="mobile-field">
+                <span><Calendar className="w-3.5 h-3.5" /> Due</span>
+                <input type="datetime-local" name="dueDateTime" value={formData.dueDateTime || ''} onChange={handleChange} />
+              </label>
+              <label className="mobile-field">
+                <span><Tag className="w-3.5 h-3.5" /> Source</span>
+                <input type="text" name="order" value={formData.order || ''} onChange={handleChange} placeholder="GT, Social..." />
+              </label>
+              <label className="mobile-field mobile-urgent-field">
+                <span><Flag className="w-3.5 h-3.5" /> Urgent</span>
+                <input type="checkbox" name="urgent" checked={!!formData.urgent} onChange={handleChange} className="mobile-checkbox" />
+              </label>
             </div>
-          </div>
 
-          <div className="mt-5">
-            <p className="mb-2 text-[11px] font-black uppercase tracking-[0.16em] text-white/40">Type</p>
-            <div className="flex flex-wrap gap-2">
-              {['', 'Quay', 'Dựng', 'Livestream'].map((type) => (
-                <button
-                  key={type}
-                  type="button"
-                  onClick={() => setFormData((prev) => ({ ...prev, taskType: type }))}
-                  className={`mobile-chip ${formData.taskType === type ? 'mobile-chip-active' : ''}`}
-                >
-                  {type || 'None'}
-                </button>
-              ))}
+            <div className="mobile-dropdown-grid">
+              {compactDropdown({
+                id: 'status',
+                label: 'Status',
+                value: formData.status || 'todo',
+                options: statusOptions,
+                onSelect: (status) => setFormData((prev) => ({ ...prev, status })),
+              })}
+              {compactDropdown({
+                id: 'type',
+                label: 'Type',
+                value: formData.taskType || '',
+                options: typeOptions,
+                onSelect: (taskType) => setFormData((prev) => ({ ...prev, taskType })),
+              })}
             </div>
-          </div>
+          </section>
 
-          <div className="mt-5">
+          <div className="mt-3">
             <p className="mb-2 text-[11px] font-black uppercase tracking-[0.16em] text-white/40">Description</p>
             <MarkdownEditor
               name="description"
               value={formData.description || ''}
               onChange={handleChange}
               placeholder="Notes, context, requirements..."
-              style={{ minHeight: '160px' }}
+              style={{ minHeight: '118px' }}
             />
           </div>
 

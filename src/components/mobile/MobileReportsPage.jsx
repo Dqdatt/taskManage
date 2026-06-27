@@ -42,27 +42,29 @@ function MobileReportsPage() {
       <section className="mobile-report-hero">
         <div>
           <p className="text-[11px] font-black uppercase tracking-[0.2em] text-yellow-100/60">Progress</p>
-          <h2 className="mt-1 text-4xl font-black text-white">{stats.progress}%</h2>
-          <p className="mt-1 text-sm text-white/55">{stats.done} of {stats.total} tasks completed</p>
+          <h2 className="mt-1 text-[32px] leading-none font-black text-white">{stats.progress}%</h2>
+          <p className="mt-1 text-[12px] text-white/55">{stats.done}/{stats.total} completed</p>
         </div>
         <div className="mobile-progress-ring" style={{ '--progress': `${stats.progress * 3.6}deg` }}>
           <span>{stats.progress}%</span>
         </div>
       </section>
 
-      <section className="grid grid-cols-2 gap-3">
+      <section className="mobile-report-grid">
         {cards.map(({ label, value, icon: Icon, tone }) => (
           <div key={label} className="mobile-stat-card">
-            <div className={`mb-4 flex h-10 w-10 items-center justify-center rounded-2xl ${tone}`}>
-              <Icon className="h-5 w-5" />
+            <div className={`mobile-stat-icon ${tone}`}>
+              <Icon className="h-4 w-4" />
             </div>
-            <p className="text-3xl font-black text-white">{value}</p>
-            <p className="text-xs font-bold uppercase tracking-[0.14em] text-white/40">{label}</p>
+            <div className="min-w-0">
+              <p className="text-[22px] leading-none font-black text-white">{value}</p>
+              <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.12em] text-white/40">{label}</p>
+            </div>
           </div>
         ))}
       </section>
 
-      <section className="mobile-panel">
+      <section className="mobile-panel mobile-section-gap">
         <div className="mb-4 flex items-center justify-between">
           <h3 className="text-sm font-black uppercase tracking-[0.16em] text-white/60 flex items-center gap-2">
             <Tags className="w-4 h-4" /> Task mix

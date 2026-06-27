@@ -212,7 +212,7 @@ Transcript:
 
   return (
     <div className="mobile-page">
-      <div className="flex items-center justify-between gap-3">
+      <div className="mobile-page-actions">
         <button type="button" onClick={() => { setAppState('upload'); setCurrentSummary(''); }} className="mobile-mini-button">
           <Plus className="w-4 h-4" /> New
         </button>
@@ -227,8 +227,8 @@ Transcript:
           <div className="mobile-ai-orb">
             <Mic className="w-9 h-9" />
           </div>
-          <h2 className="mt-5 text-2xl font-black text-white">Upload meeting audio</h2>
-          <p className="mx-auto mt-2 max-w-[260px] text-sm leading-relaxed text-white/50">
+          <h2 className="mt-4 text-[22px] font-black text-white">Upload meeting audio</h2>
+          <p className="mx-auto mt-2 max-w-[260px] text-[13px] leading-relaxed text-white/50">
             MP3, M4A or WAV. Gemini up to 20MB, OpenAI up to 25MB.
           </p>
         </section>
@@ -256,7 +256,7 @@ Transcript:
         </section>
       )}
 
-      <section className="mobile-panel">
+      <section className="mobile-panel mobile-section-gap">
         <div className="mb-4 flex items-center justify-between gap-3">
           <h3 className="text-sm font-black uppercase tracking-[0.16em] text-white/60 flex items-center gap-2">
             <Clock className="w-4 h-4" /> Saved meetings
