@@ -29,7 +29,9 @@ function MobileApp() {
         <div className="flex items-center gap-3 min-w-0">
           <img src="/favicon.svg" alt="Orbit" className="w-9 h-9 shrink-0 drop-shadow-md" />
           <div className="min-w-0">
-            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-200/70">Orbit</p>
+            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-200/70">
+              Orbit <span className="ml-1 text-[9px] tracking-[0.12em] text-white/35">ver3.2.8</span>
+            </p>
             <h1 className="text-xl font-black leading-tight text-white truncate">{pageTitles[activeTab]}</h1>
           </div>
         </div>
