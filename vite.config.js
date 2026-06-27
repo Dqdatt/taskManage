@@ -7,14 +7,18 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'pwa-192x192.png', 'pwa-512x512.png'],
+      includeAssets: ['favicon.svg', 'apple-touch-icon.png', 'pwa-192x192.png', 'pwa-512x512.png', 'pwa-maskable-512x512.png'],
       manifest: {
         name: 'Orbit',
         short_name: 'Orbit',
-        description: 'A premium task management application',
-        theme_color: '#0f172a',
-        background_color: '#0f172a',
+        description: 'Orbit task management for focused mobile work.',
+        id: '/',
+        start_url: '/',
+        scope: '/',
+        theme_color: '#07110d',
+        background_color: '#07110d',
         display: 'standalone',
+        orientation: 'portrait-primary',
         icons: [
           {
             src: 'pwa-192x192.png',
@@ -27,10 +31,10 @@ export default defineConfig({
             type: 'image/png'
           },
           {
-            src: 'pwa-512x512.png',
+            src: 'pwa-maskable-512x512.png',
             sizes: '512x512',
             type: 'image/png',
-            purpose: 'any maskable'
+            purpose: 'maskable'
           }
         ]
       }

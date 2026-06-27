@@ -1,25 +1,48 @@
-import React, { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AppContext } from './context/AppContext';
 import Navbar from './components/layout/Navbar';
 import TasksView from './components/tasks/TasksView';
 import CalendarView from './components/calendar/CalendarView';
 import AiMeetView from './components/ai/AiMeetView';
-import AiSettingsModal from './components/ai/AiSettingsModal';
 import ReportView from './components/reports/ReportView';
 import NewTaskModal from './components/tasks/NewTaskModal';
 import TaskDrawer from './components/tasks/TaskDrawer';
 import PwaInstallPrompt from './components/ui/PwaInstallPrompt';
+import MobileApp from './components/mobile/MobileApp';
+import MobileTaskSheet from './components/mobile/MobileTaskSheet';
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.matchMedia('(max-width: 639px)').matches;
+  });
+
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 639px)');
+    const handleChange = () => setIsMobile(media.matches);
+    handleChange();
+    media.addEventListener('change', handleChange);
+    return () => media.removeEventListener('change', handleChange);
+  }, []);
+
+  return isMobile;
+}
 
 function App() {
   const { activeTab, isNewTaskModalOpen, closeNewTaskModal, selectedTaskId, setSelectedTaskId } = useContext(AppContext);
+  const isMobile = useIsMobile();
 
   return (
     <>
       {/* Fixed background layer — prevents scroll white flash on mobile */}
       <div id="bg-fixed" aria-hidden="true" />
 
-      {/* App shell — use h-dvh for proper mobile viewport height */}
-      <div className="relative z-10 text-gray-100 font-sans h-[100dvh] w-full flex flex-col overflow-hidden sm:p-4 md:p-6 sm:pb-4">
+      <div className="relative z-10 text-gray-100 font-sans h-[100dvh] w-full overflow-hidden sm:hidden">
+        <MobileApp />
+      </div>
+
+      {/* Desktop/tablet shell */}
+      <div className="relative z-10 text-gray-100 font-sans h-[100dvh] w-full hidden sm:flex flex-col overflow-hidden sm:p-4 md:p-6 sm:pb-4">
         {/* Main App Window */}
         <div className="glass-container w-full h-full sm:rounded-[2rem] flex flex-col overflow-hidden shadow-2xl relative safe-pb-app">
           <Navbar />
@@ -31,16 +54,24 @@ function App() {
         </div>
 
         {/* Global Modals */}
-        {isNewTaskModalOpen && (
+        {isNewTaskModalOpen && !isMobile && (
           <NewTaskModal onClose={closeNewTaskModal} />
         )}
-        {selectedTaskId && (
+        {selectedTaskId && !isMobile && (
           <TaskDrawer taskId={selectedTaskId} onClose={() => setSelectedTaskId(null)} />
         )}
 
         {/* PWA Install Prompt */}
-        <PwaInstallPrompt />
+        {!isMobile && <PwaInstallPrompt />}
       </div>
+
+      {isNewTaskModalOpen && isMobile && (
+        <NewTaskModal onClose={closeNewTaskModal} />
+      )}
+      {selectedTaskId && isMobile && (
+        <MobileTaskSheet key={selectedTaskId} taskId={selectedTaskId} onClose={() => setSelectedTaskId(null)} />
+      )}
+      {isMobile && <PwaInstallPrompt />}
     </>
   );
 }
