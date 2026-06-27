@@ -37,11 +37,21 @@ function App() {
     const updateStandaloneClass = () => {
       const isStandalone = media.matches || window.navigator.standalone === true;
       document.documentElement.classList.toggle('is-standalone-pwa', isStandalone);
+      const viewportHeight = isStandalone
+        ? Math.max(window.innerHeight, window.screen?.height || 0)
+        : window.innerHeight;
+      document.documentElement.style.setProperty('--orbit-app-height', `${viewportHeight}px`);
     };
 
     updateStandaloneClass();
     media.addEventListener('change', updateStandaloneClass);
-    return () => media.removeEventListener('change', updateStandaloneClass);
+    window.addEventListener('resize', updateStandaloneClass);
+    window.visualViewport?.addEventListener('resize', updateStandaloneClass);
+    return () => {
+      media.removeEventListener('change', updateStandaloneClass);
+      window.removeEventListener('resize', updateStandaloneClass);
+      window.visualViewport?.removeEventListener('resize', updateStandaloneClass);
+    };
   }, []);
 
   return (
