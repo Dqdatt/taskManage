@@ -496,6 +496,42 @@ body {
     box-shadow: 0 10px 28px rgba(253, 224, 71, 0.22);
   }
 
+  @media (display-mode: standalone) {
+    .mobile-main {
+      padding-bottom: calc(58px + env(safe-area-inset-bottom, 0px));
+    }
+
+    .mobile-bottom-nav {
+      height: calc(54px + env(safe-area-inset-bottom, 0px));
+      padding: 4px 12px max(2px, calc(env(safe-area-inset-bottom, 0px) - 28px));
+    }
+
+    .mobile-nav-item {
+      height: 46px;
+    }
+
+    .mobile-fab {
+      bottom: calc(58px + max(0px, env(safe-area-inset-bottom, 0px) - 22px));
+    }
+  }
+
+  .is-standalone-pwa .mobile-main {
+    padding-bottom: calc(58px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .is-standalone-pwa .mobile-bottom-nav {
+    height: calc(54px + env(safe-area-inset-bottom, 0px));
+    padding: 4px 12px max(2px, calc(env(safe-area-inset-bottom, 0px) - 28px));
+  }
+
+  .is-standalone-pwa .mobile-nav-item {
+    height: 46px;
+  }
+
+  .is-standalone-pwa .mobile-fab {
+    bottom: calc(58px + max(0px, env(safe-area-inset-bottom, 0px) - 22px));
+  }
+
   .mobile-icon-button {
     width: 38px;
     height: 38px;

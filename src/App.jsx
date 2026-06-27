@@ -32,6 +32,18 @@ function App() {
   const { activeTab, isNewTaskModalOpen, closeNewTaskModal, selectedTaskId, setSelectedTaskId } = useContext(AppContext);
   const isMobile = useIsMobile();
 
+  useEffect(() => {
+    const media = window.matchMedia('(display-mode: standalone)');
+    const updateStandaloneClass = () => {
+      const isStandalone = media.matches || window.navigator.standalone === true;
+      document.documentElement.classList.toggle('is-standalone-pwa', isStandalone);
+    };
+
+    updateStandaloneClass();
+    media.addEventListener('change', updateStandaloneClass);
+    return () => media.removeEventListener('change', updateStandaloneClass);
+  }, []);
+
   return (
     <>
       {/* Fixed background layer — prevents scroll white flash on mobile */}
