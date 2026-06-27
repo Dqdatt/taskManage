@@ -448,7 +448,7 @@ body {
     overflow-x: hidden;
     overscroll-behavior-y: contain;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: calc(62px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(74px + env(safe-area-inset-bottom, 0px));
   }
 
   .mobile-page {
@@ -463,8 +463,8 @@ body {
     right: 0;
     bottom: 0;
     z-index: 80;
-    height: calc(58px + env(safe-area-inset-bottom, 0px));
-    padding: 5px 12px max(5px, calc(env(safe-area-inset-bottom, 0px) - 14px));
+    height: calc(62px + env(safe-area-inset-bottom, 0px));
+    padding: 5px 12px clamp(6px, calc(env(safe-area-inset-bottom, 0px) - 28px), 14px);
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 6px;
@@ -498,38 +498,38 @@ body {
 
   @media (display-mode: standalone) {
     .mobile-main {
-      padding-bottom: calc(58px + env(safe-area-inset-bottom, 0px));
+      padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
     }
 
     .mobile-bottom-nav {
-      height: calc(54px + env(safe-area-inset-bottom, 0px));
-      padding: 4px 12px max(2px, calc(env(safe-area-inset-bottom, 0px) - 28px));
+      height: calc(62px + env(safe-area-inset-bottom, 0px));
+      padding: 5px 12px clamp(6px, calc(env(safe-area-inset-bottom, 0px) - 28px), 14px);
     }
 
     .mobile-nav-item {
-      height: 46px;
+      height: 48px;
     }
 
     .mobile-fab {
-      bottom: calc(58px + max(0px, env(safe-area-inset-bottom, 0px) - 22px));
+      bottom: calc(64px + env(safe-area-inset-bottom, 0px));
     }
   }
 
   .is-standalone-pwa .mobile-main {
-    padding-bottom: calc(58px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
   }
 
   .is-standalone-pwa .mobile-bottom-nav {
-    height: calc(54px + env(safe-area-inset-bottom, 0px));
-    padding: 4px 12px max(2px, calc(env(safe-area-inset-bottom, 0px) - 28px));
+    height: calc(62px + env(safe-area-inset-bottom, 0px));
+    padding: 5px 12px clamp(6px, calc(env(safe-area-inset-bottom, 0px) - 28px), 14px);
   }
 
   .is-standalone-pwa .mobile-nav-item {
-    height: 46px;
+    height: 48px;
   }
 
   .is-standalone-pwa .mobile-fab {
-    bottom: calc(58px + max(0px, env(safe-area-inset-bottom, 0px) - 22px));
+    bottom: calc(64px + env(safe-area-inset-bottom, 0px));
   }
 
   .mobile-icon-button {
