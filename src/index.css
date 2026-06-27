@@ -1181,6 +1181,154 @@ body {
     padding: 8px 9px;
     font-size: 16px !important;
   }
+
+  .new-task-overlay {
+    align-items: flex-start !important;
+    justify-content: center !important;
+    padding: calc(env(safe-area-inset-top, 0px) + 14px) 12px 12px !important;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .new-task-panel {
+    width: 100%;
+    max-height: calc(var(--orbit-app-height, 100dvh) - env(safe-area-inset-top, 0px) - 28px);
+    overflow-y: auto;
+    border-radius: 24px !important;
+    padding: 14px !important;
+  }
+
+  .new-task-panel > button {
+    top: 12px !important;
+    right: 12px !important;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .new-task-heading {
+    margin-bottom: 12px !important;
+    padding-right: 44px;
+  }
+
+  .new-task-heading-icon {
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  .new-task-heading h2 {
+    font-size: 23px !important;
+    line-height: 1.1;
+  }
+
+  .new-task-form {
+    display: grid;
+    gap: 10px !important;
+  }
+
+  .new-task-ai {
+    min-height: 92px;
+    margin-bottom: 0 !important;
+    padding: 12px !important;
+    border-radius: 18px !important;
+  }
+
+  .new-task-ai svg {
+    width: 22px;
+    height: 22px;
+    margin-bottom: 5px !important;
+  }
+
+  .new-task-ai p:first-of-type {
+    font-size: 10px !important;
+    line-height: 1.15;
+  }
+
+  .new-task-ai p:last-of-type {
+    margin-top: 4px !important;
+    font-size: 10px !important;
+    line-height: 1.35;
+  }
+
+  .new-task-field label {
+    margin-bottom: 5px !important;
+    margin-left: 0 !important;
+    font-size: 10px !important;
+    letter-spacing: 0.12em;
+  }
+
+  .new-task-field input,
+  .new-task-field textarea {
+    border-radius: 16px !important;
+    padding: 10px 12px !important;
+    min-height: 44px;
+    font-size: 16px !important;
+  }
+
+  .new-task-description textarea {
+    min-height: 76px;
+  }
+
+  .new-task-field .flex.flex-wrap {
+    gap: 7px !important;
+  }
+
+  .new-task-field .flex.flex-wrap button {
+    min-height: 34px;
+    padding: 0 12px !important;
+    font-size: 12px !important;
+  }
+
+  .new-task-meta-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 9px !important;
+  }
+
+  .new-task-urgent {
+    margin-top: 0 !important;
+    padding: 10px 12px !important;
+    border-radius: 16px !important;
+  }
+
+  .new-task-urgent > div:first-child {
+    gap: 10px !important;
+    min-width: 0;
+  }
+
+  .new-task-urgent > div:first-child > div:first-child {
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  .new-task-urgent p:first-child {
+    font-size: 14px !important;
+    line-height: 1.1;
+  }
+
+  .new-task-urgent p:last-child {
+    font-size: 12px !important;
+    line-height: 1.2;
+  }
+
+  .new-task-actions {
+    margin-top: 4px !important;
+    padding-top: 10px !important;
+    gap: 10px !important;
+  }
+
+  .new-task-actions button {
+    min-height: 44px;
+    border-radius: 18px !important;
+    padding: 0 18px !important;
+    font-size: 14px !important;
+  }
+
+  .new-task-actions button[type="submit"] {
+    flex: 1;
+    justify-content: center;
+  }
 }
 
 /* PWA custom slide-up animation */

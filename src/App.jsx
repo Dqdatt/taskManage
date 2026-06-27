@@ -37,9 +37,7 @@ function App() {
     const updateStandaloneClass = () => {
       const isStandalone = media.matches || window.navigator.standalone === true;
       document.documentElement.classList.toggle('is-standalone-pwa', isStandalone);
-      const viewportHeight = isStandalone
-        ? Math.max(window.innerHeight, window.screen?.height || 0)
-        : window.innerHeight;
+      const viewportHeight = window.visualViewport?.height || window.innerHeight;
       document.documentElement.style.setProperty('--orbit-app-height', `${viewportHeight}px`);
     };
 

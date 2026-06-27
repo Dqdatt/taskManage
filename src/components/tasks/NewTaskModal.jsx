@@ -170,11 +170,11 @@ Hãy trả về ĐÚNG VÀ CHỈ định dạng JSON (không markdown, không ch
 
   return (
     <div 
-      className={`fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/25 backdrop-blur-[2px] transition-opacity duration-300 ${(!isOpen || isClosing) ? 'opacity-0' : 'opacity-100'}`}
+      className={`new-task-overlay fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/25 backdrop-blur-[2px] transition-opacity duration-300 ${(!isOpen || isClosing) ? 'opacity-0' : 'opacity-100'}`}
       onClick={handleClose}
     >
       <div 
-        className={`glass-container w-full max-w-lg rounded-[1.5rem] sm:rounded-[2rem] p-5 sm:p-8 shadow-[0_0_50px_rgba(0,0,0,0.5)] relative transition-all duration-300 ${(!isOpen || isClosing) ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}`}
+        className={`new-task-panel glass-container w-full max-w-lg rounded-[1.5rem] sm:rounded-[2rem] p-5 sm:p-8 shadow-[0_0_50px_rgba(0,0,0,0.5)] relative transition-all duration-300 ${(!isOpen || isClosing) ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}`}
         onClick={(e) => e.stopPropagation()}
       >
         <button 
@@ -185,18 +185,18 @@ Hãy trả về ĐÚNG VÀ CHỈ định dạng JSON (không markdown, không ch
           <X className="w-5 h-5" />
         </button>
 
-        <div className="flex items-center gap-3 mb-5 sm:mb-6">
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 flex items-center justify-center text-white border border-white/20 shrink-0">
+        <div className="new-task-heading flex items-center gap-3 mb-5 sm:mb-6">
+          <div className="new-task-heading-icon w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 flex items-center justify-center text-white border border-white/20 shrink-0">
             <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
           </div>
           <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">Create New Task</h2>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+        <form onSubmit={handleSubmit} className="new-task-form space-y-4 sm:space-y-5">
           {/* AI Vision Auto-fill */}
           <div 
             onClick={handleAiImageClick}
-            className="mb-4 sm:mb-5 p-3 sm:p-4 rounded-xl border-2 border-dashed border-white/20 bg-white/5 hover:bg-white/10 hover:border-accent-purple/50 transition-all flex flex-col items-center justify-center cursor-pointer relative group"
+            className="new-task-ai mb-4 sm:mb-5 p-3 sm:p-4 rounded-xl border-2 border-dashed border-white/20 bg-white/5 hover:bg-white/10 hover:border-accent-purple/50 transition-all flex flex-col items-center justify-center cursor-pointer relative group"
           >
              <ImageIcon className="w-6 h-6 text-gray-400 mb-2 group-hover:text-accent-purple transition-colors" />
              <p className="text-[11px] font-bold text-gray-400 text-center uppercase tracking-wider">Tạo nhanh bằng hình ảnh</p>
@@ -217,7 +217,7 @@ Hãy trả về ĐÚNG VÀ CHỈ định dạng JSON (không markdown, không ch
              )}
           </div>
 
-          <div>
+          <div className="new-task-field">
             <label className="block text-[10px] sm:text-[11px] font-bold text-gray-400 mb-1.5 ml-1 uppercase tracking-wider">Task Name</label>
             <input 
               type="text" 
@@ -230,7 +230,7 @@ Hãy trả về ĐÚNG VÀ CHỈ định dạng JSON (không markdown, không ch
             />
           </div>
 
-          <div>
+          <div className="new-task-field">
             <label className="block text-[10px] sm:text-[11px] font-bold text-gray-400 mb-1.5 ml-1 uppercase tracking-wider">Task Type</label>
             <div className="flex flex-wrap gap-2">
               {['', 'Quay', 'Dựng', 'Livestream'].map((type) => (
@@ -253,7 +253,7 @@ Hãy trả về ĐÚNG VÀ CHỈ định dạng JSON (không markdown, không ch
             </div>
           </div>
 
-          <div>
+          <div className="new-task-field new-task-description">
             <label className="block text-[10px] sm:text-[11px] font-bold text-gray-400 mb-1.5 ml-1 uppercase tracking-wider">Description</label>
             <textarea 
               name="description"
@@ -265,8 +265,8 @@ Hãy trả về ĐÚNG VÀ CHỈ định dạng JSON (không markdown, không ch
             ></textarea>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
+          <div className="new-task-meta-grid grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="new-task-field">
               <label className="block text-[10px] sm:text-[11px] font-bold text-gray-400 mb-1.5 ml-1 uppercase tracking-wider">Due Date</label>
               <input 
                 type="datetime-local" 
@@ -276,7 +276,7 @@ Hãy trả về ĐÚNG VÀ CHỈ định dạng JSON (không markdown, không ch
                 className="glass-input w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl text-sm text-gray-200 [color-scheme:dark]" 
               />
             </div>
-            <div>
+            <div className="new-task-field">
               <label className="block text-[10px] sm:text-[11px] font-bold text-gray-400 mb-1.5 ml-1 uppercase tracking-wider">Source / Order</label>
               <input 
                 type="text" 
@@ -289,7 +289,7 @@ Hãy trả về ĐÚNG VÀ CHỈ định dạng JSON (không markdown, không ch
             </div>
           </div>
 
-          <div className="flex justify-between items-center bg-black/20 p-4 rounded-xl border border-white/5 mt-2">
+          <div className="new-task-urgent flex justify-between items-center bg-black/20 p-4 rounded-xl border border-white/5 mt-2">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-accent-red/20 text-accent-red flex items-center justify-center shadow-[0_0_10px_rgba(239,68,68,0.3)]">
                 <Flag className="w-4 h-4" />
@@ -312,7 +312,7 @@ Hãy trả về ĐÚNG VÀ CHỈ định dạng JSON (không markdown, không ch
             </label>
           </div>
 
-          <div className="pt-4 flex justify-end gap-3 border-t border-white/10 mt-6">
+          <div className="new-task-actions pt-4 flex justify-end gap-3 border-t border-white/10 mt-6">
             <button type="button" onClick={handleClose} className="px-4 py-2.5 rounded-full text-sm font-medium text-white hover:bg-white/10 transition-all">
               Cancel
             </button>
