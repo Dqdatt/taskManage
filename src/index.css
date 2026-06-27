@@ -448,7 +448,7 @@ body {
     overflow-x: hidden;
     overscroll-behavior-y: contain;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: calc(74px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: 88px;
   }
 
   .mobile-page {
@@ -463,8 +463,8 @@ body {
     right: 0;
     bottom: 0;
     z-index: 80;
-    height: calc(62px + env(safe-area-inset-bottom, 0px));
-    padding: 5px 12px clamp(6px, calc(env(safe-area-inset-bottom, 0px) - 28px), 14px);
+    height: 82px;
+    padding: 8px 12px 10px;
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 6px;
@@ -476,7 +476,7 @@ body {
   }
 
   .mobile-nav-item {
-    height: 48px;
+    height: 58px;
     border-radius: 16px;
     color: rgba(255, 255, 255, 0.5);
     display: flex;
@@ -498,38 +498,38 @@ body {
 
   @media (display-mode: standalone) {
     .mobile-main {
-      padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+      padding-bottom: 88px;
     }
 
     .mobile-bottom-nav {
-      height: calc(62px + env(safe-area-inset-bottom, 0px));
-      padding: 5px 12px clamp(6px, calc(env(safe-area-inset-bottom, 0px) - 28px), 14px);
+      height: 82px;
+      padding: 8px 12px 10px;
     }
 
     .mobile-nav-item {
-      height: 48px;
+      height: 58px;
     }
 
     .mobile-fab {
-      bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+      bottom: 92px;
     }
   }
 
   .is-standalone-pwa .mobile-main {
-    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: 88px;
   }
 
   .is-standalone-pwa .mobile-bottom-nav {
-    height: calc(62px + env(safe-area-inset-bottom, 0px));
-    padding: 5px 12px clamp(6px, calc(env(safe-area-inset-bottom, 0px) - 28px), 14px);
+    height: 82px;
+    padding: 8px 12px 10px;
   }
 
   .is-standalone-pwa .mobile-nav-item {
-    height: 48px;
+    height: 58px;
   }
 
   .is-standalone-pwa .mobile-fab {
-    bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+    bottom: 92px;
   }
 
   .mobile-icon-button {
@@ -689,7 +689,7 @@ body {
   .mobile-fab {
     position: fixed;
     right: 18px;
-    bottom: calc(64px + max(0px, env(safe-area-inset-bottom, 0px) - 10px));
+    bottom: 92px;
     z-index: 70;
     width: 56px;
     height: 56px;
